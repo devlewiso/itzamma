@@ -24,7 +24,10 @@ export default function Home() {
   const handleCapture = async () => {
     setCapturing(true);
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      // Solicitar acceso a la cámara trasera
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "environment" }
+      });
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         videoRef.current.play();
@@ -107,17 +110,17 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gray-100">
       <header className="bg-green-600 text-white p-4">
-        <h1 className="text-2xl font-bold">Itzamná</h1>
+        <h1 className="text-3xl font-bold">Itzamná</h1>
       </header>
 
       <main className="flex-grow container mx-auto px-4 py-8">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">
+          <h1 className="text-5xl font-bold mb-4 text-green-700">
             Itzamná - Identificador de Plantas
           </h1>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-gray-700">
             Descubre el mundo vegetal con IA
           </p>
         </div>
@@ -128,7 +131,7 @@ export default function Home() {
               <video ref={videoRef} className="w-full rounded-lg mb-4" />
               <button
                 onClick={takePhoto}
-                className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 transition-colors w-full mb-4"
+                className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors w-full mb-4"
               >
                 Capturar Foto
               </button>
@@ -137,7 +140,7 @@ export default function Home() {
             <>
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors mb-4 w-full"
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors mb-4 w-full"
               >
                 Elegir archivo
               </button>
@@ -150,7 +153,7 @@ export default function Home() {
               />
               <button
                 onClick={handleCapture}
-                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors mb-4 w-full"
+                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors mb-4 w-full"
               >
                 Usar Cámara
               </button>
@@ -170,7 +173,7 @@ export default function Home() {
           <button
             onClick={identifyPlant}
             disabled={!image || loading}
-            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors w-full"
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors w-full"
           >
             {loading ? "Identificando..." : "Identificar Planta"}
           </button>
@@ -182,98 +185,39 @@ export default function Home() {
               <p className="text-lg mb-4">{result}</p>
               <div className="mt-8 border-t pt-4">
                 <p className="text-gray-500">
-                  Creado por <strong>Iran Lewis</strong> con{" "}
-                  <a
-                    href="https://neuralcodelab.com"
-                    target="_blank"
-                    className="text-blue-500 hover:underline"
-                  >
-                    NeuralCodeLab.com
-                  </a>
-                  .
+                  Creado por <strong>neuralcodelab.com</strong>
                 </p>
+                <a
+                  href="https://www.patreon.com/neuralcodelab"
+                  className="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700 transition-colors mt-4 inline-block"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Apoyar en Patreon
+                </a>
               </div>
             </div>
           )}
+          {showDonationPrompt && (
+            <div className="mt-8 p-6 bg-yellow-100 rounded-lg shadow-lg text-center">
+              <p className="text-lg font-semibold mb-4">
+                ¡Gracias por usar nuestra aplicación!
+              </p>
+              <p className="text-gray-600 mb-4">
+                Hemos notado que has usado el servicio varias veces. Si te ha sido útil, considera apoyarnos en Patreon.
+              </p>
+              <a
+                href="https://www.patreon.com/neuralcodelab"
+                className="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Apoyar en Patreon
+              </a>
+            </div>
+          )}
         </div>
-
-        <section className="mt-16">
-          <h2 className="text-3xl font-bold text-center mb-8">Cómo funciona</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md text-center flex flex-col items-center">
-              <Camera className="mb-4 text-green-500" size={48} />
-              <h3 className="text-xl font-semibold mb-2">1. Toma una foto</h3>
-              <p>
-                Captura una imagen clara de la planta que deseas identificar.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-md text-center flex flex-col items-center">
-              <Upload className="mb-4 text-blue-500" size={48} />
-              <h3 className="text-xl font-semibold mb-2">2. Sube la imagen</h3>
-              <p>
-                Carga la foto en nuestra aplicación usando el botón "Elegir
-                archivo".
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-md text-center flex flex-col items-center">
-              <Search className="mb-4 text-purple-500" size={48} />
-              <h3 className="text-xl font-semibold mb-2">
-                3. Obtén resultados
-              </h3>
-              <p>
-                Nuestro sistema de IA analizará la imagen y te proporcionará
-                información sobre la planta.
-              </p>
-            </div>
-          </div>
-        </section>
       </main>
-
-      {showDonationPrompt && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
-          <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm text-center">
-            <h2 className="text-xl font-semibold mb-4">
-              ¡Gracias por usar Itzamná!
-            </h2>
-            <p className="mb-4">
-              Has realizado 5 consultas gratuitas. Considera apoyar nuestro
-              proyecto con una donación para mantener el servicio funcionando.
-            </p>
-            <a
-              href="https://paypal.me/exxxtasisM?country.x=GT&locale.x=es_XC"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition-colors"
-            >
-              Donar con PayPal
-            </a>
-            <button
-              onClick={() => setShowDonationPrompt(false)}
-              className="mt-4 text-gray-500 hover:text-gray-700 transition-colors"
-            >
-              Continuar sin donar
-            </button>
-          </div>
-        </div>
-      )}
-
-      <footer className="bg-green-600 text-white p-4 text-center">
-        <p>
-          &copy; 2024 Itzamná - Identificador de Plantas. Todos los derechos
-          reservados.
-        </p>
-        <div className="mt-2">
-          <p>¿Te gusta nuestra aplicación? ¡Apóyanos con una donación!</p>
-          <a
-            href="https://paypal.me/exxxtasisM?country.x=GT&locale.x=es_XC"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-yellow-500 text-white px-4 py-2 mt-2 rounded hover:bg-yellow-600 transition-colors"
-          >
-            Donar con PayPal
-          </a>
-        </div>
-      </footer>
     </div>
   );
 }
