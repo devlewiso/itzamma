@@ -1,4 +1,4 @@
-// File: /mnt/c/Users/devle/OneDrive/Documents/Build/reactjs/kaax/app/api/hello/route.ts
+// File: /mnt/c/Users/devle/OneDrive/Escritorio/itzamma/app/api/hello/route.ts
 import * as entry from '../../../../../app/api/hello/route.js'
 import type { NextRequest } from 'next/server.js'
 
