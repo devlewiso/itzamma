@@ -1,4 +1,4 @@
-// File: C:\Users\devle\OneDrive\Documents\Build\reactjs\kaax\app\layout.tsx
+// File: /mnt/c/Users/devle/OneDrive/Escritorio/itzamma/app/layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
