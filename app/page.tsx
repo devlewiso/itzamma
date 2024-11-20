@@ -69,7 +69,7 @@ export default function Home() {
     setResult(null);
 
     const genAI = new GoogleGenerativeAI(
-      "AIzaSyAyT74VJyYZWus5KxxX1VhwUxELJkxGIDo"
+      "AIzaSyCazeR9Q4LOG0n6i9UVtuvQJR5o7nQAYdg"
     );
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
